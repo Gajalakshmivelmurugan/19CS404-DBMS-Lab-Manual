@@ -53,222 +53,410 @@ ON table1.column = table2.column;
 ```
 
 **Question 1**
-![Screenshot 2025-04-29 174738](https://github.com/user-attachments/assets/290f6cc3-7622-40ec-bce9-baab7ccc99d4)
+```
+Write the SQL query that achieves the selection of all columns from the "patients" table (aliased as "p"), with an inner join on the "patient_id" column and a condition filtering for appointments with an appointment date between '2024-01-01' and '2024-01-31'.
+
+PATIENTS TABLE:
+<img width="581" height="99" alt="image" src="https://github.com/user-attachments/assets/627c7a18-f741-4d3e-a63e-d6e6be338035" />
+
+APPOINTMENTS TABLE:
+<img width="585" height="91" alt="image" src="https://github.com/user-attachments/assets/35e417d8-2213-48df-bff0-8ac9082d3b4c" />
+
+For example:
+
+Result
+patient_id       first_name       last_name        date_of_birth    admission_date  discharge_date  doctor_id
+---------------  ---------------  ---------------  ---------------  --------------  --------------  ----------
+1                Alice            Williams         1980-05-12       2024-01-10                      1
+```
 
 ```
-SELECT 
-    p.first_name AS patient_name,
-    t.test_name
-FROM 
-    patients p
-INNER JOIN 
-    test_results t ON p.patient_id = t.patient_id;
-```
+select p.*
+from patients as p
+inner join appointments as a
+on a.patient_id=p.patient_id
+where a.appointment_date BETWEEN '2024-01-01' and '2024-01-31';
 
+```
 **Output:**
-![Screenshot 2025-04-29 174918](https://github.com/user-attachments/assets/b84a6bd2-6f8f-4d38-837b-57166978d12b)
 
+
+<img width="1300" height="372" alt="image" src="https://github.com/user-attachments/assets/edff8cd4-199d-40d4-bf97-afe2192842ea" />
 
 
 **Question 2**
-![Screenshot 2025-04-29 174935](https://github.com/user-attachments/assets/e7d12367-c15c-4650-9777-4ad31d543d8f)
+```
+Write the SQL query that achieves the selection of the first name from the "patients" table and all columns from the "surgeries" table, with an inner join on the "patient_id" column and a condition filtering for patients with a date of birth after '1990-01-01'.
 
+PATIENTS TABLE:
+
+name             type
+---------------  ---------------
+patient_id       INT
+first_name       VARCHAR(50)
+last_name        VARCHAR(50)
+date_of_birth    DATE
+admission_date   DATE
+discharge_date   DATE
+doctor_id        INT
+
+SURGERIES TABLE:
+
+name             type
+---------------  ---------------
+surgery_id       INT
+patient_id       INT
+surgeon_id       INT
+surgery_date     DATE
+
+For example:
+
+Result
+first_name       surgery_id       patient_id       surgeon_id       surgery_date
+---------------  ---------------  ---------------  ---------------  ------------
+Bob              2                2                2                2024-02-28
 ```
-SELECT 
-    s.name,
-    c.cust_name,
-    c.city,
-    c.grade,
-    c.salesman_id
-FROM 
-    salesman s
-LEFT JOIN 
-    customer c ON s.salesman_id = c.salesman_id
-WHERE 
-    s.salesman_id IN (
-        SELECT salesman_id
-        FROM customer
-        GROUP BY salesman_id
-        HAVING COUNT(*) > 1
-    );
-```
+
+
+
 **Output:**
 
-![Screenshot 2025-04-29 175002](https://github.com/user-attachments/assets/9a0ed5bd-f6dd-46e5-bcaa-495473df23de)
+
+<img width="1297" height="352" alt="image" src="https://github.com/user-attachments/assets/5cefc894-be29-4461-aeef-1d80da08feef" />
 
 
 **Question 3**
-![Screenshot 2025-04-29 175112](https://github.com/user-attachments/assets/3879d1c5-55f5-49fe-a2f3-b2032876f3d2)
 ```
-SELECT 
-    o.ord_no,
-    o.purch_amt,
-    o.ord_date,
-    c.cust_name,
-    c.city AS customer_city,
-    c.grade,
-    s.name AS salesman_name,
-    s.city AS salesman_city,
-    s.commission
-FROM 
-    orders o
-INNER JOIN 
-    customer c ON o.customer_id = c.customer_id
-INNER JOIN 
-    salesman s ON o.salesman_id = s.salesman_id;
+Write the SQL query that accomplishes the selection of the first name and last name from the "patients" table, with an inner join on the "patient_id" column and a condition filtering for surgeries with a surgery date between '2024-01-01' and '2024-01-31'.
+
+PATIENTS TABLE:
+
+name             type
+---------------  ---------------
+patient_id       INT
+first_name       VARCHAR(50)
+last_name        VARCHAR(50)
+date_of_birth    DATE
+admission_date   DATE
+discharge_date   DATE
+doctor_id        INT
+
+SURGERIES TABLE:
+
+name             type
+---------------  ---------------
+surgery_id       INT
+patient_id       INT
+surgeon_id       INT
+surgery_date     DATE
+
+For example:
+
+Result
+first_name       last_name
+---------------  ---------------
+Alice            Williams
+```
 
 ```
+select p.first_name,p.last_name
+from patients as p
+inner join surgeries as s
+on s.patient_id=p.patient_id
+where s.surgery_date between '2024-01-01' and '2024-01-31';
+
+```
+
 **Output:**
-![Screenshot 2025-04-29 175130](https://github.com/user-attachments/assets/91bab884-416d-4095-80a2-eb16a2630085)
 
+
+<img width="1312" height="353" alt="image" src="https://github.com/user-attachments/assets/f34af17f-11da-405d-a281-17b69aff49af" />
 
 
 **Question 4**
-![Screenshot 2025-04-29 175137](https://github.com/user-attachments/assets/831a0f4d-2857-4f9f-aede-73aa34685bb9)
+```
+Write the SQL query that accomplishes the selection of the first name from the "patients" table (aliased as "patient_name") and the first name from the "doctors" table (aliased as "doctor_name"), with an inner join on the "doctor_id" column and a condition filtering for patients with a non-null discharge date.
+
+PATIENTS TABLE:
+name             type
+---------------  ---------------
+patient_id       INT
+first_name       VARCHAR(50)
+last_name        VARCHAR(50)
+date_of_birth    DATE
+admission_date   DATE
+discharge_date   DATE
+doctor_id        INT
+
+DOCTORS TABLE:
+
+name             type
+---------------  ---------------
+doctor_id        INT
+first_name       VARCHAR(50)
+last_name        VARCHAR(50)
+specialization   VARCHAR(100)
+
+For example:
+
+Result
+patient_name     doctor_name
+---------------  ---------------
+Bob              Emily
 ```
 
-SELECT 
-    n.nurse_id,
-    d.department_name
-FROM 
-    nurses n
-INNER JOIN 
-    departments d ON n.department_id = d.department_id
-WHERE 
-    n.first_name = 'David'
-    AND n.last_name = 'Moore';
+```
+select p.first_name as 'patient_name',d.first_name as 'doctor_name'
+from patients as p
+inner join doctors as d
+on d.doctor_id=p.doctor_id
+where p.discharge_date is NOT NULL;
 
 ```
+
 **Output:**
 
-![Screenshot 2025-04-29 175158](https://github.com/user-attachments/assets/af46f22f-0ab2-417c-aef5-e582ca72804a)
+
+<img width="1299" height="354" alt="image" src="https://github.com/user-attachments/assets/14b8c631-fa31-4327-83a3-f1c18160732d" />
+
 
 **Question 5**
 ```
-![Screenshot 2025-04-29 175209](https://github.com/user-attachments/assets/cc47527b-5baf-4234-8d7a-b2abb0c994ac)
+Write the SQL query that achieves the selection of the date of birth from the "patients" table (aliased as "p") and all columns from the "appointments" table (aliased as "a"), with an inner join on the "patient_id" column and a condition filtering for patients with the first name 'Alice'.
 
+PATIENTS TABLE:
+<img width="572" height="96" alt="image" src="https://github.com/user-attachments/assets/482986c3-14ee-4ddb-9b11-b0752fa36b73" />
 
-SELECT 
-    c.cust_name AS "Customer Name",
-    c.city AS "city",
-    s.name AS "Salesman",
-    s.city AS "city",
-    s.commission
-FROM 
-    customer c
-INNER JOIN 
-    salesman s ON c.salesman_id = s.salesman_id
-WHERE 
-    c.city <> s.city
-    AND s.commission > 0.12;
+APPOINTMENTS TABLE:
+<img width="587" height="93" alt="image" src="https://github.com/user-attachments/assets/4ed19cbd-745b-42a4-9099-44c90c71ef9d" />
+
+For example:
+
+Result
+date_of_birth    appointment_id   patient_id       doctor_id        appointment_date
+---------------  ---------------  ---------------  ---------------  -------------------
+1980-05-12       1                1                1                2024-01-05 10:00:00
 
 ```
+
+```
+select p.date_of_birth,a.*
+from patients as p
+inner join appointments as a
+on a.patient_id=p.patient_id
+where p.first_name='Alice';
+
+```
+
 **Output:**
-![Screenshot 2025-04-29 175224](https://github.com/user-attachments/assets/413a432c-dd89-4e8f-8288-f00abffeb5b8)
+
+
+<img width="1297" height="374" alt="image" src="https://github.com/user-attachments/assets/be34ccb3-420f-4bbc-a7e1-64a217f4aec9" />
 
 
 **Question 6**
-![Screenshot 2025-04-29 175237](https://github.com/user-attachments/assets/7393e493-d969-4937-b0cc-af18d6b6c084)
 ```
-SELECT 
-    c.cust_name,
-    c.city,
-    o.ord_no,
-    o.ord_date,
-    o.purch_amt AS "Order Amount",
-    s.name,
-    s.commission
-FROM 
-    customer c
-LEFT JOIN 
-    orders o ON c.customer_id = o.customer_id
-LEFT JOIN 
-    salesman s ON o.salesman_id = s.salesman_id;
+Write the SQL query that achieves the selection of all columns from the "patients" table (aliased as "p"), with an inner join on the "patient_id" column and conditions filtering for test results with the test names 'Blood Test' or 'Blood Pressure' and results not containing the substring 'Normal'.
+
+PATIENTS TABLE:
+<img width="582" height="91" alt="image" src="https://github.com/user-attachments/assets/7d63a32f-2f73-4c64-a5c2-72af10f54dc4" />
+
+TEST_RESULT TABLES:
+<img width="579" height="87" alt="image" src="https://github.com/user-attachments/assets/ec2475c7-4e1f-416b-9ff2-78cc70f00418" />
+
+For example:
+
+Result
+patient_id       first_name       last_name        date_of_birth    admission_date  discharge_date  doctor_id
+---------------  ---------------  ---------------  ---------------  --------------  --------------  ----------
+1                Alice            Williams         1980-05-12       2024-01-10                      1
+```
 
 ```
+select p.*
+from patients as p
+inner join test_results as t
+on t.patient_id=p.patient_id
+where t.test_name IN ('Blood Test' , 'Blood Pressure') 
+and t.result NOT LIKE '%Normal%';
+```
+
 **Output:**
 
-![Screenshot 2025-04-29 175258](https://github.com/user-attachments/assets/c8ecdbbc-d9e5-4a57-abe8-6199aca67f20)
+
+<img width="1299" height="376" alt="image" src="https://github.com/user-attachments/assets/78a0806a-da20-4e54-b0ed-eda269b36e9c" />
 
 
 **Question 7**
+```
+Write the SQL query that achieves the selection of the first name from the "patients" table (aliased as "patient_name") and all columns from the "test_results" table (aliased as "t"), with an inner join on the "patient_id" column and a condition filtering for test results with the test name 'Blood Pressure'.
 
-![Screenshot 2025-04-29 175310](https://github.com/user-attachments/assets/14ffae86-0cbe-475d-91cc-ace6e344cfaf)
+PATIENTS TABLE:
+<img width="582" height="94" alt="image" src="https://github.com/user-attachments/assets/4ddb3614-403e-48c1-9856-263d3419744b" />
+
+TEST_RESULT TABLES:
+<img width="582" height="92" alt="image" src="https://github.com/user-attachments/assets/13f579c1-690a-499f-adbd-0f07636baa4c" />
+
+For example:
+
+Result
+patient_name     result_id        patient_id       test_name        result      test_date
+---------------  ---------------  ---------------  ---------------  ----------  ----------
+Alice            1                1                Blood Pressure   120/80      2024-01-20
+```
 
 ```
-SELECT 
-    p.*
-FROM 
-    patients p
-INNER JOIN 
-    test_results t ON p.patient_id = t.patient_id
-WHERE 
-    t.test_name = 'X-Ray'
-    AND t.result = 'Normal';
+select p.first_name as 'patient_name',t.*
+from patients as p
+inner join test_results as t
+on t.patient_id=p.patient_id
+where t.test_name='Blood Pressure';
+
 ```
+
 **Output:**
-![Screenshot 2025-04-29 175327](https://github.com/user-attachments/assets/7b590030-6408-4316-b579-cb8b6b87ee9b)
 
+
+<img width="1305" height="373" alt="image" src="https://github.com/user-attachments/assets/b9167a4f-3e8f-46b0-8b79-88f7fd3f7299" />
 
 
 **Question 8**
-![Screenshot 2025-04-29 175339](https://github.com/user-attachments/assets/8624974e-1ab4-4f28-8ebb-0480e40ad829)
 ```
-SELECT 
-    c.cust_name,
-    c.city,
-    o.ord_no,
-    o.ord_date,
-    o.purch_amt AS "Order Amount"
-FROM 
-    customer c
-LEFT JOIN 
-    orders o ON c.customer_id = o.customer_id
-ORDER BY 
-    o.ord_date ASC;
+Write the SQL query that achieves the selection of the first name from the "patients" table (aliased as "patient_name"), with an inner join on the "patient_id" column and a condition filtering for test results with the test name 'Blood Pressure'.
+
+PATIENTS TABLE:
+<img width="582" height="92" alt="image" src="https://github.com/user-attachments/assets/f789c583-9df6-4064-9758-76453afd867e" />
+
+TEST_RESULT TABLES:
+<img width="580" height="91" alt="image" src="https://github.com/user-attachments/assets/c6f8a8f4-03d5-4794-b2cf-262d651b94c0" />
+
+For example:
+
+Result
+patient_name
+---------------
+Alice
 ```
+```
+select p.first_name as 'patient_name'
+from patients as p
+inner join test_results as t
+on t.patient_id = p.patient_id
+where t.test_name='Blood Pressure';
+```
+
 **Output:**
 
-![Screenshot 2025-04-29 175357](https://github.com/user-attachments/assets/073e1b8f-b132-4cbe-a19c-75b1121caa64)
+
+<img width="1296" height="350" alt="image" src="https://github.com/user-attachments/assets/0675a132-ddcc-4f8e-86c8-8a1b6593a2c7" />
 
 
 **Question 9**
-![Screenshot 2025-04-29 175406](https://github.com/user-attachments/assets/d536876a-3e8d-45ef-8de3-30c2c6286eef)
 ```
-SELECT 
-    c.cust_name,
-    s.name
-FROM 
-    customer c
-LEFT JOIN 
-    salesman s ON c.salesman_id = s.salesman_id
-WHERE 
-    c.city = s.city;
+SQL statement to generate a report with customer name, city, order number, order date, order amount, salesperson name, and commission to determine if any of the existing customers have not placed orders or if they have placed orders through their salesman or by themselves.
+
+Sample table: customer
+
+ customer_id |   cust_name    |    city    | grade | salesman_id 
+-------------+----------------+------------+-------+-------------
+        3002 | Nick Rimando   | New York   |   100 |        5001
+        3007 | Brad Davis     | New York   |   200 |        5001
+        3005 | Graham Zusi    | California |   200 |        5002
+        3008 | Julian Green   | London     |   300 |        5002
+        3004 | Fabian Johnson | Paris      |   300 |        5006
+        3009 | Geoff Cameron  | Berlin     |   100 |        5003
+        3003 | Jozy Altidor   | Moscow     |   200 |        5007
+        3001 | Brad Guzan     | London     |       |        5005
+Sample table: orders
+
+ord_no      purch_amt   ord_date    customer_id  salesman_id
+----------  ----------  ----------  -----------  -----------
+70001       150.5       2012-10-05  3005         5002
+70009       270.65      2012-09-10  3001         5005
+70002       65.26       2012-10-05  3002         5001
+70004       110.5       2012-08-17  3009         5003
+70007       948.5       2012-09-10  3005         5002
+70005       2400.6      2012-07-27  3007         5001
+70008       5760        2012-09-10  3002         5001
+70010       1983.43     2012-10-10  3004         5006
+70003       2480.4      2012-10-10  3009         5003
+70012       250.45      2012-06-27  3008         5002
+70011       75.29       2012-08-17  3003         5007
+70013       3045.6      2012-04-25  3002         5001
+Sample table: salesman
+
+ salesman_id |    name    |   city   | commission 
+-------------+------------+----------+------------
+        5001 | James Hoog | New York |       0.15
+        5002 | Nail Knite | Paris    |       0.13
+        5005 | Pit Alex   | London   |       0.11
+        5006 | Mc Lyon    | Paris    |       0.14
+        5007 | Paul Adam  | Rome     |       0.13
+        5003 | Lauson Hen | San Jose |       0.12
+For example:
+
+Result
+cust_name        city             ord_no           ord_date         Order Amount  name        commission
+---------------  ---------------  ---------------  ---------------  ------------  ----------  ----------
+Nick Rimando     Chennai          70002            2012-10-05       65.26         Bob Emily   0.15
+Nick Rimando     Chennai          70008            2012-09-10       5760.0        Bob Emily   0.15
+Nick Rimando     Chennai          70013            2012-04-25       3045.6        Bob Emily   0.15
+Graham Zusi      California       70001            2012-10-05       150.5         Nail Knite  0.13
+Graham Zusi      California       70007            2012-09-10       948.5         Nail Knite  0.13
+Brad Guzan       London           70009            2012-09-10       270.65        Pit Alex    0.11
+Fabian Johns     Paris            70010            2012-10-10       1983.43       Mc Lyon     0.14
+Brad Davis       New York         70005            2012-07-27       2400.6        Bob Emily   0.15
+Geoff Cameron    Berlin           70003            2012-10-10       2480.4        Lauson Hen  0.12
+Geoff Cameron    Berlin           70004            2012-08-17       110.5         Lauson Hen  0.12
+Julian Green     London           70012            2012-06-27       250.45        Nail Knite  0.13
+Jozy Altidore    Moscow           70011            2012-08-17       75.29         Paul Adam   0.13
 ```
+
+```
+select c.cust_name,c.city,o.ord_no,o.ord_date,o.purch_amt as 'Order Amount',s.name,s.commission
+from customer c
+left join orders as o
+on c.customer_id=o.customer_id
+left join salesman as s
+on c.salesman_id=s.salesman_id;
+```
+
 **Output:**
 
-![Screenshot 2025-04-29 175420](https://github.com/user-attachments/assets/b383cc08-9b59-455a-89bc-b04b9194b2bd)
+
+<img width="1298" height="975" alt="image" src="https://github.com/user-attachments/assets/076dfa9d-4ea3-4507-abad-55a8fdfaa6b1" />
 
 
 **Question 10**
-![Screenshot 2025-04-29 175428](https://github.com/user-attachments/assets/09a5d616-b0ae-4a08-a609-a8acac6d3c71)
+```
+Write the SQL query that achieves the selection of all columns from the "nurses" table (aliased as "n"), with an inner join on the "department_id" column and a condition filtering for nurses in the 'Pediatrics' department.
+
+NURSES TABLE:
+<img width="583" height="97" alt="image" src="https://github.com/user-attachments/assets/d56eebf3-c85c-4c9d-b133-a4a1788193ea" />
+
+DEPARTMENTS TABLE:
+<img width="581" height="98" alt="image" src="https://github.com/user-attachments/assets/85e692e4-0cc4-4fd7-ae02-f93a88b3668e" />
+
+For example:
+
+Result
+nurse_id         first_name       last_name        department_id
+---------------  ---------------  ---------------  ---------------
+3                Sophia           Clark            3
+```
 
 ```
-SELECT 
-    c.cust_name AS "Customer Name",
-    c.city AS "city",
-    s.name AS "Salesman",
-    s.commission AS "commission"
-FROM 
-    customer c
-JOIN 
-    salesman s ON c.salesman_id = s.salesman_id;
+select n.*
+from nurses as n
+inner join departments as d
+on d.department_id=n.department_id
+where department_name='Pediatrics';
+
 ```
+
 **Output:**
 
-![Screenshot 2025-04-29 175443](https://github.com/user-attachments/assets/46d235a3-4449-4eaa-add0-2b863fde835e)
-
-
+<img width="1298" height="346" alt="image" src="https://github.com/user-attachments/assets/cd4fc639-27ed-4d22-b3f1-cd7116ccfdc6" />
 
 ## RESULT
 Thus, the SQL queries to implement different types of joins have been executed successfully.
