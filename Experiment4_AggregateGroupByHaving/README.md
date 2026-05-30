@@ -37,329 +37,289 @@ HAVING condition;
 ```
 
 **Question 1**
---
--- 
-Write a SQL Query to find how many medications are prescribed for each patient?
+```
+Write a SQL query to find the minimum purchase amount.
 
-Sample table:MedicalRecords Table
+Sample table: orders
 
-![image](https://github.com/user-attachments/assets/6a6d0203-c203-4a57-b668-dc4927d6e484)
-    
-    For example:
-    
-    Result
-    PatientID   AvgMedications
-    ----------  --------------
-    4           5
-    6           1
-    7           1
-    8           3
+ord_no      purch_amt   ord_date    customer_id  salesman_id
 
+----------  ----------  ----------  -----------  -----------
 
-```sql
---
-SELECT PatientID, COUNT(*) AS AvgMedications
-FROM MedicalRecords
-GROUP BY PatientID;
+70001       150.5       2012-10-05  3005         5002
+
+70009       270.65      2012-09-10  3001         5005
+
+70002       65.26       2012-10-05  3002         5001
+For example:
+
+Result
+MINIMUM
+----------
+65.26
+```
+
+```
+select MIN(purch_amt) as MINIMUM
+from orders;
 
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/ebb90cc1-67d2-4bda-ad32-68d6e06f23d5)
+
+<img width="1328" height="237" alt="image" src="https://github.com/user-attachments/assets/1089d71f-0304-4d2a-a0ea-b9a0e8334096" />
 
 
 **Question 2**
----
---
-What is the most common diagnosis among patients?
+```
+Write a SQL query to calculate the total number of working hours of all employees
 
-Sample table:MedicalRecords Table
+Sample table: employee1
+For example:
 
-![image](https://github.com/user-attachments/assets/a9e4e689-12df-430c-a2e3-a54842a3a6d8)
+Result
+Total working hours
+-------------------
+111
+```
 
-
-    For example:
-    
-    Result
-    Diagnosis              DiagnosisCount
-    ---------------------  --------------
-    Childhood vaccination  3
-
-
-```sql
---
-SELECT
-    Diagnosis,
-    COUNT(*) AS DiagnosisCount
-FROM 
-    MedicalRecords
-GROUP BY 
-    Diagnosis
-ORDER BY
-    DiagnosisCount DESC
-LIMIT 1;
+```
+select SUM(workhour) as "Total working hours"
+from employee1;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/8888a2be-04cd-4e78-bf9e-54269e11dad6)
+
+<img width="1319" height="237" alt="image" src="https://github.com/user-attachments/assets/df25ea00-681b-4a3c-99d3-acef0d94cb0f" />
 
 
 **Question 3**
----
---![Screenshot 2025-04-29 131558](https://github.com/user-attachments/assets/d054f243-ab5a-49e1-bdd9-071c29ff5199)
+```
+Write a SQL query to find the difference between the maximum and minimum price of fruits?
 
+Table: fruits
 
-```sql
--- select avg(length(email)) as avg_email_length
-from customer
-order by length(email)
-limit 1;
+name        type
+----------  ----------
+id          INTEGER
+name        TEXT
+unit        TEXT
+inventory   INTEGER
+price       REAL
+
+For example:
+Result
+price_diff
+----------
+4.65
+```
+
+```
+select MAX(price)-MIN(price) as price_diff
+from fruits;
+
 ```
 
 **Output:**
-![Screenshot 2025-04-29 131605](https://github.com/user-attachments/assets/c279b3db-a9e8-4dcf-b38a-cd467996b4f9)
+
+
+<img width="1328" height="258" alt="image" src="https://github.com/user-attachments/assets/71bb28b3-7678-4243-96e1-c949cd1c58b3" />
+
+
 **Question 4**
----
--- 
-Write a SQL query to find  how many employees work in California?
+```
 
-Table: employee
+What is the average dosage prescribed for each medication?
 
-    name        type
-    ----------  ----------
-    id          INTEGER
-    name        TEXT
-    age         INTEGER
-    city        TEXT
-    income      INTEGER
- 
+Sample tablePrescriptions Table
+For example:
 
-    For example:
-    
-    Result
-    employees_in_california
-    -----------------------
-    2
+Result
+Medication     AvgDosage
+-------------  ----------
+Ciprofloxacin  500.0
+Doxorubicin    60.0
+Ibuprofen      400.0
+Levothyroxine  50.0
+Lisinopril     10.0
+MMR            0.5
+Pending        0.0
+Prenatal vita  1.0
+Sertraline     50.0
+Topiramate     25.0
+```
 
-
-```sql
--- 
-SELECT COUNT(*) AS employees_in_california
-FROM employee
-WHERE city = 'California';
-
+```
+select Medication,AVG(Dosage) as "AvgDosage"
+from Prescriptions
+group by Medication;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/8539494b-fd23-4b03-881a-a005ac092f9e)
+
+<img width="1330" height="536" alt="image" src="https://github.com/user-attachments/assets/9e5db926-a683-4403-ab92-afb83dfb23ef" />
 
 
 **Question 5**
----
--- 
-Write a SQL query to find the total number of unique cities in the customer table?
+```
+How many male and female doctors are there in each medical specialty?
 
-Table: customer
+Sample table:Doctors Table
 
-    name        type
-    ----------  ----------
-    id          INTEGER
-    name        TEXT
-    city        TEXT
-    email       TEXT
-    phone       INTEGER
-    For example:
-    
-    Result
-    unique_cities
-    -------------
-    10
+For example:
 
+Result
+Specialty          Gender    TotalDoctors
+-----------------  --------  --------------
+Cardiology         Male      1
+Dermatology        Male      1
+Gastroenterology   Female    4
+Gastroenterology   Male      1
+Pediatrics         Female    1
+Pediatrics         Male      2
+```
 
-```sql
--- 
-SELECT COUNT(DISTINCT city) AS unique_cities
-FROM customer;
-
-
+```
+select Specialty,Gender,COUNT(DoctorID) as TotalDoctors
+from Doctors
+group by Specialty,Gender;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/9d5a3ec2-a257-4b6c-802c-21a082307661)
+
+<img width="1319" height="482" alt="image" src="https://github.com/user-attachments/assets/89ff0413-8f51-4e22-9b71-1c8254b53b7e" />
 
 
 **Question 6**
----
--- 
-Write a SQL query to Calculate the average email length (in characters) for people who lives in Mumbai city
+```
+How many patients are there in each city?
+Sample table: Patients Table
+For example:
+Result
+Address     TotalPatients
+----------  -------------
+Berlin      3
+Chicago     4
+Mexico      3
+```
 
-Table: customer
-
-    name        type
-    ----------  ----------
-    id          INTEGER
-    name        TEXT   
-    city        TEXT
-    email       TEXT
-    phone       INTEGER
-    For example:
-    
-    Result
-    avg_email_length_below_30
-    -------------------------
-    14.0
-
-
-```sql
---
-SELECT AVG(LENGTH(email)) AS avg_email_length_below_30
-FROM customer
-WHERE city = 'Mumbai';
-
+```
+select Address,COUNT(PatientID) as TotalPatients
+from Patients
+group by Address;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/ebe68ef7-1f1e-4554-873e-6c712a797cd1)
+
+<img width="1324" height="321" alt="image" src="https://github.com/user-attachments/assets/413f0055-2d99-497f-ada2-fd78aa49e283" />
 
 
 **Question 7**
----
---
-Write a SQL query to  find the average salary of all employees?
 
-Table: employee
+```
+Write the SQL query that accomplishes the grouping of data by joining date (jdate), calculates the total work hours for each date, and excludes dates where the total work hour sum is not greater than 40.
+Sample table: employee1
+For example:
+Result
+jdate       SUM(workhour)
+----------  -------------
+2004.0      46
+2006.0      46
+```
 
-    name        type
-    ----------  ----------
-    id          INTEGER
-    name        TEXT
-    age         INTEGER
-    city        TEXT
-    income      INTEGER
-     
-    
-    For example:
-    
-    Result
-    Average_Salary
-    --------------
-    1568750.0
-
-```sql
--- 
-SELECT AVG(income) AS Average_Salary
-FROM employee;
-
+```
+select jdate,SUM(workhour) as "SUM(workhour)"
+from employee1
+group by jdate
+having SUM(workhour)>40;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/a89b3da5-e3be-4110-9f8a-2ac7e174e61f)
+
+<img width="1327" height="303" alt="image" src="https://github.com/user-attachments/assets/d189eaf5-a24c-48ea-a788-cce00df518af" />
 
 
 **Question 8**
----
---
-Write the SQL query that accomplishes the selection of average price for each category from the "products" table and includes only those products where the average price falls between 10 and 15.
+```
+Write the SQL query that accomplishes the grouping of data by age intervals using the expression (age/5)5, calculates the minimum age for each group, and excludes groups where the minimum age is not less than 25.
+Sample table: customer1
+For example:
+Result
+age_group   MIN(age)
+----------  ----------
+20          22
 
-Sample table: products
+```
 
-![image](https://github.com/user-attachments/assets/05c5adce-efb4-4643-83e1-694af481d7df)
-
-
-
-    For example:
-    
-    Result
-    category_id  AVG(Price)
-    -----------  ----------
-    1            12.375
-
-
-```sql
--- 
-SELECT category_id, AVG(price) AS "AVG(Price)"
-FROM products
-GROUP BY category_id
-HAVING AVG(price) BETWEEN 10 AND 15;
-
+```
+select (age/5)*5 as "age_group", MIN(age) as "MIN(age)"
+from customer1
+group by (age/5)*5
+having MIN(age)<25;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/55d3960f-ede8-4f67-9a65-8675a24b9b0d)
+
+<img width="1326" height="265" alt="image" src="https://github.com/user-attachments/assets/f594bd87-6944-4698-8540-ddbc3ea30b04" />
 
 
 **Question 9**
----
---
-Write the SQL query that accomplishes the grouping of data by age, calculates the maximum income for each age group, and includes only those age groups where the maximum income is greater than 2,000,000.
+```
+Write the SQL query that accomplishes the selection of total number of products for each category from the "products" table, and includes only those products where the minimum category ID is less than 3.
+Sample table: products
+For example:
+Result
+category_id  count(product_name)
+-----------  -------------------
+1            4
+2            3
+```
 
-Sample table: employee
-
-![image](https://github.com/user-attachments/assets/b79821cf-f64e-45ce-9115-22ff3b53f92f)
-
-
-    For example:
-    
-    Result
-    age         MAX(income)
-    ----------  -----------
-    35          5000000
-
-
-```sql
---
-SELECT age, MAX(income) AS "MAX(income)"
-FROM employee
-GROUP BY age
-HAVING MAX(income) > 2000000;
-
+```
+select category_id, count(product_name) as "count(product_name)"
+from products
+group by category_id
+having category_id<3;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/74cd2970-e386-4aa6-b7a6-cc01d5cb9a06)
+
+<img width="1327" height="292" alt="image" src="https://github.com/user-attachments/assets/d39835bb-16dc-4ee9-afdb-906cb588d3a3" />
 
 
 **Question 10**
----
--- 
-Write a SQL query to identify the cities (addresses) where the average salary is greater than Rs. 5000, as per the "customer1" table.
+```
+Write the SQL query that achieves the grouping of data by occupation, calculates the total work hours for each occupation, and excludes occupations where the total work hour sum is not greater than 20.
+Sample table: employee1
+For example:
+Result
+occupation  SUM(workhour)
+----------  -------------
+Business    30
+Doctor      30
+Engineer    24
+Teacher     27
+```
 
-Sample table: customer1
-
-![image](https://github.com/user-attachments/assets/541eeaa3-85ac-4319-ae0f-b744deb489cc)
-
-
-
-    For example:
-    
-    Result
-    address     AVG(salary)
-    ----------  -----------
-    Bhopal      8500.0
-    Indore      10000.0
-    Mumbai      6500.0
-
-
-```sql
--- 
-SELECT address, AVG(salary) AS "AVG(salary)"
-FROM customer1
-GROUP BY address
-HAVING AVG(salary) > 5000;
-
+```
+select occupation,SUM(workhour) as 'SUM(workhour)'
+from employee1
+group by occupation
+having SUM(workhour)>20;
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/30d4504d-cb2b-4316-87f5-4baad5e018a1)
+
+<img width="1323" height="346" alt="image" src="https://github.com/user-attachments/assets/f34b0105-a7c3-4b16-8781-081fcd337c6f" />
 
 
 
