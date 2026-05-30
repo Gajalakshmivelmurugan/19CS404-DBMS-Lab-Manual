@@ -1,128 +1,138 @@
-# Experiment 1: Entity-Relationship (ER) Diagram
+# ER Diagram Workshop – Submission Template
 
-## 🎯 Objective:
-To understand and apply the concepts of ER modeling by creating an ER diagram for a real-world application.
+## Objective
+To understand and apply ER modeling concepts by creating ER diagrams for real-world applications.
 
-## 📚 Purpose:
-The purpose of this workshop is to gain hands-on experience in designing ER diagrams that visually represent the structure of a database including entities, relationships, attributes, and constraints.
-
----
-
-## 🧪 Choose One Scenario:
-
-### 🔹 Scenario 1: University Database
-Design a database to manage students, instructors, programs, courses, and student enrollments. Include prerequisites for courses.
-
-**User Requirements:**
-- Academic programs grouped under departments.
-- Students have admission number, name, DOB, contact info.
-- Instructors with staff number, contact info, etc.
-- Courses have number, name, credits.
-- Track course enrollments by students and enrollment date.
-- Add support for prerequisites (some courses require others).
+## Purpose
+Gain hands-on experience in designing ER diagrams that represent database structure including entities, relationships, attributes, and constraints.
 
 ---
 
-### 🔹 Scenario 2: Hospital Database
-Design a database for patient management, appointments, medical records, and billing.
+# Scenario A: City Fitness Club Management
 
-**User Requirements:**
-- Patient details including contact and insurance.
-- Doctors and their departments, contact info, specialization.
-- Appointments with reason, time, patient-doctor link.
-- Medical records with treatments, diagnosis, test results.
-- Billing and payment details for each appointment.
+**Business Context:**  
+FlexiFit Gym wants a database to manage its members, trainers, and fitness programs.
 
----
+**Requirements:**  
+- Members register with name, membership type, and start date.  
+- Each member can join multiple programs (Yoga, Zumba, Weight Training).  
+- Trainers assigned to programs; a program may have multiple trainers.  
+- Members may book personal training sessions with trainers.  
+- Attendance recorded for each session.  
+- Payments tracked for memberships and sessions.
 
-## 📝 Tasks:
-1. Identify entities, relationships, and attributes.
-2. Draw the ER diagram using any tool (draw.io, dbdiagram.io, hand-drawn and scanned).
-3. Include:
-   - Cardinality & participation constraints
-   - Prerequisites for University OR Billing for Hospital
-4. Explain:
-   - Why you chose the entities and relationships.
-   - How you modeled prerequisites or billing.
+### ER Diagram:
+*Paste or attach your diagram here*  
 
-# ER Diagram Submission - PYNAM VINODH
-
-## Scenario Chosen:
-University / Hospital (choose one)
-
-## ER Diagram:
-![image](https://github.com/user-attachments/assets/20b4bc30-c8e5-49a0-b2ce-a09e6e770899)
+<img width="1311" height="902" alt="image" src="https://github.com/user-attachments/assets/5ca7b363-b52c-47c3-9b7c-49c56efd6ab9" />
 
 
-## Entities and Attributes:
-PATIENT
-Attributes: Patient_ID (PK), Name, Gender, DOB, PhoneNumber
+### Entities and Attributes
 
-DOCTOR
-Attributes: Doctor_ID (PK), Name, Specialization, PhoneNumber
 
-DEPARTMENT
-Attributes: Department_ID (PK), Department_Name, Department_Head
+<img width="895" height="450" alt="image" src="https://github.com/user-attachments/assets/53002831-950c-4612-b1d4-e81c32db1509" />
 
-MEDICAL_RECORD
-Attributes: MedicalRecord_ID (PK), Patient_Medical_Details, Medicines_Prescribed
 
-APPOINTMENT
-Attributes: Appointment_ID (PK), Cause_Of_Visit, Appointment_Date_And_Time
+### Relationships and Constraints
 
-PAYMENTS
-Attributes: Payment_ID (PK), Date_Of_Payment, Amount
-...
 
-## Relationships and Constraints:
-CONSULTS (Between PATIENT and DOCTOR)
-Cardinality: M:N
+<img width="895" height="626" alt="image" src="https://github.com/user-attachments/assets/1997df41-747f-4892-932a-27f440e22ad7" />
 
-MANAGES (Between DOCTOR and DEPARTMENT)
-Cardinality: M:1
 
-HANDLES (Between DEPARTMENT and PAYMENTS)
-Cardinality: 1:N
+### Assumptions
 
-PATIENT PERSONAL DATA (Between PATIENT and MEDICAL_RECORD)
-Cardinality: 1:N
+1.Each member, trainer, and program has a unique ID.
+2.A member can join multiple programs, but not the same program twice at the same time.
+3.A program can have multiple trainers.
+4.Members can book personal training sessions with trainers in advance.
+5.Attendance is recorded for each session.
+6.Payments are recorded separately for memberships and personal training sessions.
+7.Expired members cannot book new sessions.
 
-DELIVERED FORM (Between MEDICAL_RECORD and APPOINTMENT)
-Cardinality: 1:N
+# Scenario B: City Library Event & Book Lending System
 
-COST OF CONSULTATION (Between APPOINTMENT and PAYMENTS)
-Cardinality: 1:1
-...
+**Business Context:**  
+The Central Library wants to manage book lending and cultural events.
 
-## Extension (Prerequisite / Billing):
-COST OF CONSULTATION (APPOINTMENT–PAYMENTS)
-Attributes: Not explicitly listed beyond those in PAYMENTS entity
-Cardinality: 1:1
+**Requirements:**  
+- Members borrow books, with loan and return dates tracked.  
+- Each book has title, author, and category.  
+- Library organizes events; members can register.  
+- Each event has one or more speakers/authors.  
+- Rooms are booked for events and study.  
+- Overdue fines apply for late returns.
 
-## Design Choices:
-Surrogate Keys like Patient_ID, Doctor_ID, Department_ID, etc., are used as unique identifiers.
+### ER Diagram:
 
-M:N relationships like CONSULTS are clearly modeled.
 
-Relationship "DELIVERED FORM" connects appointments and medical records, ensuring traceability.
+<img width="982" height="702" alt="image" src="https://github.com/user-attachments/assets/709bee55-8f7c-41cc-857b-75ae1494ee66" />
 
-Normalization is evident with separate entities for medical records, payments, appointments, etc.
 
-## RESULT
-Tables:
+### Entities and Attributes
 
-PATIENT (Patient_ID, Name, Gender, DOB, PhoneNumber)
-DOCTOR (Doctor_ID, Name, Specialization, PhoneNumber)
-DEPARTMENT (Department_ID, Department_Name, Department_Head)
-MEDICAL_RECORD (MedicalRecord_ID, Patient_Medical_Details, Medicines_Prescribed)
-APPOINTMENT (Appointment_ID, Cause_Of_Visit, Appointment_Date_And_Time)
-PAYMENTS (Payment_ID, Date_Of_Payment, Amount)
+<img width="895" height="543" alt="image" src="https://github.com/user-attachments/assets/32ed18e9-95f7-45d2-882c-41a49fcefee0" />
 
-Associative (Relation) Tables:
 
-CONSULTS (Patient_ID, Doctor_ID)
-MANAGES (Doctor_ID, Department_ID)
-HANDLES (Department_ID, Payment_ID)
-PATIENT_PERSONAL_DATA (Patient_ID, MedicalRecord_ID)
-DELIVERED_FORM (MedicalRecord_ID, Appointment_ID)
-COST_OF_CONSULTATION (Appointment_ID, Payment_ID)
+### Relationships and Constraints
+
+
+<img width="875" height="541" alt="image" src="https://github.com/user-attachments/assets/f5481b9a-5ce2-4f26-9a0e-f8f08b4d3b29" />
+
+
+### Assumptions
+
+1.Each member, book, event, speaker, and room has a unique ID.
+2.A member can borrow multiple books, but a book can be issued to only one member at a time.
+3.Loan date and return date are recorded for every borrowed book.
+4.Fine is calculated based on the number of overdue days.
+5.A member can register for multiple events.
+6.An event can have multiple speakers/authors.
+7.A room can be booked for events or study, but only one booking per time slot.
+8.A book belongs to only one category.
+
+# Scenario C: Restaurant Table Reservation & Ordering
+
+**Business Context:**  
+A popular restaurant wants to manage reservations, orders, and billing.
+
+**Requirements:**  
+- Customers can reserve tables or walk in.  
+- Each reservation includes date, time, and number of guests.  
+- Customers place food orders linked to reservations.  
+- Each order contains multiple dishes; dishes belong to categories (starter, main, dessert).  
+- Bills generated per reservation, including food and service charges.  
+- Waiters assigned to serve reservations.
+
+### ER Diagram:
+
+
+<img width="961" height="1291" alt="image" src="https://github.com/user-attachments/assets/29393c2d-2d03-48dc-9aa1-6640022a1727" />
+
+
+### Entities and Attributes
+
+
+<img width="885" height="614" alt="image" src="https://github.com/user-attachments/assets/22f341bf-b53b-4cdd-b3d5-12432a02dfcd" />
+
+
+### Relationships and Constraints
+
+
+<img width="876" height="586" alt="image" src="https://github.com/user-attachments/assets/d8e5fe52-6d8f-4f2f-926d-a8a6be527290" />
+
+
+### Assumptions
+
+1.Each customer, reservation, waiter, dish, and bill has a unique ID.
+2.A reservation is made for a specific date and time with a fixed number of guests.
+3.Walk-in customers are also recorded as reservations.
+4.One reservation is assigned to one waiter, but a waiter can handle multiple reservations.
+5.Each order is linked to one reservation.
+6.An order can contain multiple dishes, and each dish belongs to one category.
+7.Only one final bill is generated per reservation.
+8.The bill includes food charges + service charges.
+
+## RESULT:
+Thus the ER Diagram for each scenario has been drawn and explained successfully.
+
+
