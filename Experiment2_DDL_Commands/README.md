@@ -1,4 +1,4 @@
-# Experiment 2: DDL Commands
+**# Experiment 2: DDL Commands
 
 ## AIM
 To study and implement DDL commands and different types of constraints.
@@ -298,3 +298,4 @@ foreign key(DepartmentID) references Departments(DepartmentID)
 
 ## RESULT
 Thus, the SQL queries to implement different types of constraints and DDL commands have been executed successfully.
+**
