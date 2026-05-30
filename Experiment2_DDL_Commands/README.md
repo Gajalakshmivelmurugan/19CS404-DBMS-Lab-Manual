@@ -1,4 +1,4 @@
-**# Experiment 2: DDL Commands
+# Experiment 2: DDL Commands
 
 ## AIM
 To study and implement DDL commands and different types of constraints.
@@ -104,198 +104,325 @@ CREATE TABLE Table_Name (
 ```
 
 **Question 1**
---
-![Screenshot 2025-04-29 094759](https://github.com/user-attachments/assets/1ff73ec5-f6a1-4e70-9010-161c6f3772f6)
+```
+Create a table named Tasks with the following columns:
 
+TaskID as INTEGER
+TaskName as TEXT
+DueDate as DATE
+For example:
 
-
-```sql
---
-INSERT INTO Employee(EmployeeID,Name,Position)
-values(5,           'George Clark',  'Consultant');
-
-INSERT INTO Employee(EmployeeID,Name,Position,Department,Salary)
-values(7,           'Noah Davis',    'Manager',     'HR',          60000);
-
-INSERT INTO Employee(EmployeeID,Name,Position,Department)
-values(8,           'Ava Miller',    'Consultant',  'IT');
+Test	Result
+pragma table_info('Tasks');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           TaskID      INTEGER     0                       0
+1           TaskName    TEXT        0                       0
+2           DueDate     DATE        0                       0
 ```
 
+```
+CREATE TABLE tasks(
+   TaskID  INTEGER,
+   TaskName  TEXT,
+   DueDate DATE
+);
+```
 **Output:**
-![Screenshot 2025-04-29 124245](https://github.com/user-attachments/assets/89435e54-9c59-4711-bc20-d0f6f9f6e311)
 
-
+<img width="1321" height="268" alt="image" src="https://github.com/user-attachments/assets/97e3d266-6547-4d40-a6b6-289f78246c2e" />
 
 
 **Question 2**
----
---![image](https://github.com/user-attachments/assets/ca0a9da9-7501-4266-ba08-645feed50fd9)
+```
+Insert all books from Out_of_print_books into Books
 
-```sql
--- 
-CREATE TABLE Attendance (  
-    AttendanceID INTEGER PRIMARY KEY,  
-    EmployeeID INTEGER,  
-    AttendanceDate DATE,  
-    Status TEXT CHECK (Status IN ('Present', 'Absent', 'Leave')),  
-    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)  
-);
+Table attributes are ISBN, Title, Author, Publisher, YearPublished
+
+For example:
+
+Test	Result
+select * from Books;
+ISBN            Title           Author              Publisher      YearPublished
+--------------  --------------  ------------------  -------------  -------------
+978-1234567890  The Lost World  Arthur Conan Doyle  Vintage Books  1912
+978-0987654321  Gone with the   Margaret Mitchell   Macmillan      1936
+978-1122334455  Moby Dick       Herman Melville     Harper & Brot  1851
+```
+```
+INSERT INTO Books
+SELECT * FROM Out_of_print_books;
+
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/c39daf8f-3430-4210-a8ff-d01b24a63277)
+<img width="1327" height="214" alt="image" src="https://github.com/user-attachments/assets/8a51def1-fe7a-47e6-a091-1726cb84d499" />
 
 
 **Question 3**
----
---![image](https://github.com/user-attachments/assets/dae1d226-9026-4d29-9254-7de0910c737f)
+```
+Write a SQL query to Add a new column named "discount" with the data type DECIMAL(5,2) to the "customer" table.
+
+Sample table: customer
+
+ customer_id |   cust_name    |    city    | grade | salesman_id 
+-------------+----------------+------------+-------+-------------
+        3002 | Nick Rimando   | New York   |   100 |        5001
+        3007 | Brad Davis     | New York   |   200 |        5001
+        3005 | Graham Zusi    | California |   200 |        5002
+ 
+
+For example:
+
+Test	Result
+pragma table_info('customer');
+cid         name         type                               notnull     dflt_value  pk
+----------  -----------  ---------------------------------  ----------  ----------  ----------
+0           customer_id  integer primarykey auto increment  0                       0
+1           cust_name    varchar2(30)                       0                       0
+2           city         varchar(30)                        0                       0
+3           grade        number                             0                       0
+4           salesman_id  number                             0                       0
+5           discount     DECIMAL(5,2)                       0                       0
+```
 
 
-```sql
---
-ALTER TABLE Employees
-ADD COLUMN Date_of_joining Date;
-
-ALTER TABLE Employees
-RENAME COLUMN job_title To Designation;
-
+```
+ALTER TABLE customer
+ADD discount DECIMAL(5,2);
 
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/34ffec3a-d6f4-4db9-a215-4b0e07cf2498)
+<img width="1323" height="273" alt="image" src="https://github.com/user-attachments/assets/4d8c8bb4-c03b-4c76-805f-a1c5cdab9d79" />
 
 
 **Question 4**
----
--- ![image](https://github.com/user-attachments/assets/5269cf0c-35ef-423a-8f4d-e23d598326c0)
+```
+Create a table named Employees with the following columns:
 
-```sql
---
- CREATE TABLE jobs (  
-    job_id INTEGER PRIMARY KEY,  
-    job_title TEXT NOT NULL DEFAULT '',  
-    min_salary INTEGER NOT NULL DEFAULT 8000,  
-    max_salary INTEGER DEFAULT NULL  
+EmployeeID as INTEGER
+FirstName as TEXT
+LastName as TEXT
+HireDate as DATE
+For example:
+
+Test	Result
+pragma table_info('Employees');
+cid   name        type        notnull     dflt_value  pk
+----  ----------  ----------  ----------  ----------  ----------
+0     EmployeeID  INTEGER     0                       0
+1     FirstName   TEXT        0                       0
+2     LastName    TEXT        0                       0
+3     HireDate    DATE        0                       0
+```
+
+```
+CREATE TABLE employees(
+    EmployeeID INTEGER,
+    FirstName TEXT,
+    LastName TEXT,
+    HireDate DATE
 );
 ```
 
 **Output:**
-![image](https://github.com/user-attachments/assets/6ac5521f-2c29-4742-8243-8b4e41797c86)
+
+<img width="1322" height="221" alt="image" src="https://github.com/user-attachments/assets/02ec2ca5-3c67-41c4-b66d-f3c29afb0523" />
 
 
 **Question 5**
----
--- ![image](https://github.com/user-attachments/assets/df2640c1-2236-4197-a730-8d3801cdb17b)
+```
+Create a table named Invoices with the following constraints:
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+Amount as REAL should be greater than 0.
+DueDate as DATE should be greater than the InvoiceDate.
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
+For example:
 
+Test	Result
+INSERT INTO Orders (OrderID, OrderDate, CustomerID) VALUES (1, '2024-08-01', 1);
+INSERT INTO Invoices (InvoiceID, InvoiceDate, Amount, DueDate, OrderID) VALUES (1, '2024-08-01', 100.0, '2024-09-01', 1);
+SELECT * FROM Invoices;
+InvoiceID   InvoiceDate  Amount      DueDate     OrderID
+----------  -----------  ----------  ----------  ----------
+1           2024-08-01   100.0       2024-09-01  1
+```
 
-```sql
---
-CREATE TABLE Departments(
-DepartmentID INTEGER,
-DepartmentName TEXT
+```
+CREATE TABLE Invoices(
+     InvoiceID INTEGER PRIMARY KEY,
+     InvoiceDate DATE,
+     Amount Real check(Amount > 0),
+     DueDate DATE check(DueDate > InvoiceDate),
+     OrderID INTEGER,
+     foreign key(OrderId) references Orders(OrderID)
 );
+
 ```
 
 **Output:**
-![image](https://github.com/user-attachments/assets/455829b4-4134-45de-b480-5692c256072d)
+
+<img width="1323" height="228" alt="image" src="https://github.com/user-attachments/assets/b65d9351-eae8-4c52-b03f-62d0588a3494" />
 
 
 **Question 6**
----
---![image](https://github.com/user-attachments/assets/9e2758a1-6ee5-4c45-8061-abac41022770)
+```
+Create a table named Locations with the following columns:
 
+LocationID as INTEGER
+LocationName as TEXT
+Address as TEXT
+For example:
 
-```sql
---
-select *from Out_of_print_books
-union all
-select *from Books
+Test	Result
+pragma table_info('Locations');
+cid       name             type        notnull     dflt_value  pk
+--------  ---------------  ----------  ----------  ----------  ----------
+0         LocationID       INTEGER     0                       0
+1         LocationName     TEXT        0                       0
+2         Address          TEXT        0                       0
+```
+
+```
+create table Locations(
+    LocationID INTEGER,
+    LocationName TEXT,
+    Address TEXT
+);
+
 ```
 
 **Output:**
-![image](https://github.com/user-attachments/assets/151cdda8-17c8-4153-9df3-34567f3eaa0f)
+
+<img width="1326" height="284" alt="image" src="https://github.com/user-attachments/assets/d0dfe2f0-1310-4c9f-bb70-02c6b1f3fcc3" />
 
 
 **Question 7**
----
---![image](https://github.com/user-attachments/assets/c8c69844-81cf-4cf9-8eba-a0b0d0bb6701)
+```
+Insert the below data into the Student_details table, allowing the Subject and MARKS columns to take their default values.
+
+RollNo      Name          Gender      
+----------  ------------  ----------  
+204         Samuel Black  M          
+
+Note: The Subject and MARKS columns will use their default values.
+ 
+For example:
+
+Test	Result
+SELECT RollNo, Name, Gender 
+FROM Student_details 
+WHERE RollNo = 204;
 
 
-```sql
---
-CREATE TABLE item (  
-    item_id TEXT PRIMARY KEY,  
-    item_desc TEXT NOT NULL,  
-    rate INTEGER NOT NULL,  
-    icom_id TEXT CHECK(4),  
-    FOREIGN KEY (icom_id) REFERENCES company(com_id)  
-    ON UPDATE CASCADE  
-    ON DELETE CASCADE  
-);
+RollNo      Name          Gender
+----------  ------------  ----------
+204         Samuel Black  M
+```
+
+```
+INSERT INTO Student_details(RollNo,Name,Gender)
+Values(204,'Samuel Black','M');
 ```
 
 **Output:**
-![image](https://github.com/user-attachments/assets/4880a2ef-a33b-4cc3-b31c-216f255b2b67)
+
+<img width="1329" height="231" alt="image" src="https://github.com/user-attachments/assets/5b1b33d8-0b1f-4585-82a2-4e380a039b18" />
 
 
 **Question 8**
----
--- ![image](https://github.com/user-attachments/assets/7096c7b2-8067-45fb-95ce-c61bec119446)
+```
+Write a SQL query to add a new column MobileNumber of type NUMBER and a new column Address of type VARCHAR(100) to the Student_details table.
 
+For example:
 
-```sql
---
-ALTER TABLE employee
-ADD COLUMN designation varchar(50);
+Test	Result
+pragma table_info('Student_details');
+cid    name             type             notnu  dflt_value  pk
+-----  ---------------  ---------------  -----  ----------  ----------
+0      RollNo           int              0                  1
+1      Name             VARCHAR(100)     1                  0
+2      Gender           TEXT             1                  0
+3      Subject          VARCHAR(30)      0                  0
+4      MARKS            INT (3)          0                  0
+5      MobileNumber     NUMBER           0                  0
+6      Address          VARCHAR(100)     0                  0
 ```
 
-**Output:**
-![image](https://github.com/user-attachments/assets/0f2267dc-bc94-49e4-84e3-2a143335f3cf)
+```
+ALTER TABLE Student_details
+ADD MobileNumber NUMBER;
+ALTER TABLE Student_details
+ADD Address VARCHAR(100);
+```
 
+
+**Output:**
+<img width="1327" height="273" alt="image" src="https://github.com/user-attachments/assets/bbaa14e3-f35f-4035-9ecd-abeea87a5e17" />
 
 **Question 9**
----
--- ![image](https://github.com/user-attachments/assets/06d2e58d-4853-4ba5-9d54-f03e0c410af6)
+```
+Insert a product with ProductID 104, Name Tablet, and Category Electronics into the Products table, where Price and Stock should use default values.
 
+For example:
 
-```sql
---
-INSERT INTO Products (ProductID, Name, Category)  
-VALUES (104, 'Tablet', 'Electronics');
+Test	Result
+SELECT ProductID, Name, Category, Price, Stock 
+FROM Products 
+WHERE ProductID = 104;
+ProductID   Name        Category     Price       Stock
+----------  ----------  -----------  ----------  ----------
+104         Tablet      Electronics  100         50
+
 ```
 
+```
+
+INSERT INTO Products(ProductID,Name,Category,Price,Stock)
+Values('104','Tablet','Electronics','100','50');
+
+```
 **Output:**
 
-![image](https://github.com/user-attachments/assets/439c6599-0b13-49c7-95a4-3d53ecfde7bc)
+<img width="1323" height="171" alt="image" src="https://github.com/user-attachments/assets/80c64965-18f2-442f-992a-d3c4f2759034" />
+
 
 
 **Question 10**
----
---![image](https://github.com/user-attachments/assets/9424a09d-c763-4283-85b1-287761ae025d)
+```
+Create a table named Events with the following columns:
 
+EventID as INTEGER
+EventName as TEXT
+EventDate as DATE
+For example:
 
-```sql
---
-CREATE TABLE Employees(
-EmployeeID INTEGER primary key,
-FirstName INTEGER NOT NULL,
-LastName INTEGER NOT NULL,
-Email VARCHAR(50) unique,
-Salary CHECK (Salary>0),
-DepartmentID INTEGER,
-foreign key(DepartmentID) references Departments(DepartmentID)
-);
+Test	Result
+pragma table_info('Events');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           EventID     INTEGER     0                       0
+1           EventName   TEXT        0                       0
+2           EventDate   DATE        0                       0
 ```
 
-**Output:**
-![image](https://github.com/user-attachments/assets/8631abbc-db12-4fe7-bbf9-06bffaa06c5a)
+```
+CREATE TABLE Events(
+    EventID  INTEGER,
+    EventName  TEXT,
+    EventDate  DATE
+);
 
+```
+**Output:**
+
+<img width="1329" height="269" alt="image" src="https://github.com/user-attachments/assets/62da89c2-5130-43ff-823d-98e3dbdb6452" />
 
 
 
 ## RESULT
 Thus, the SQL queries to implement different types of constraints and DDL commands have been executed successfully.
-**
