@@ -60,25 +60,30 @@ Key Differences:
 - Use `DBMS_OUTPUT.PUT_LINE` to display the result.
 - Call the procedure with a number as input.
 
+**Syntax:**
+
+```sql
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE PROCEDURE find_square (p_num IN NUMBER) IS
+  v_square NUMBER;
+BEGIN
+  v_square := p_num * p_num;
+  DBMS_OUTPUT.PUT_LINE('Square of ' || p_num || ' is ' || v_square);
+END;
+/
+
+BEGIN
+  find_square(6);
+END;
+/
+```
 **Expected Output:**  
 Square of 6 is 36
 
-```
-CREATE OR REPLACE PROCEDURE find_square(p_number IN NUMBER) IS
-    v_square NUMBER;
-BEGIN
-    v_square := p_number * p_number;
-    DBMS_OUTPUT.PUT_LINE('Square of ' || p_number || ' is ' || v_square);
-END;
-/
-SET SERVEROUTPUT ON;
+**Output:**  
 
-BEGIN
-    find_square(6);
-END;
-/
-```
-![image](https://github.com/user-attachments/assets/d6436d5d-b540-43d7-a396-2a8debfbb20a)
+<img width="220" height="108" alt="image" src="https://github.com/user-attachments/assets/0b5cc679-da90-47c5-bc56-2a59ece54de0" />
 
 ---
 
@@ -91,40 +96,37 @@ END;
 - Return the result using the `RETURN` statement.
 - Call the function using a `SELECT` statement or in an anonymous block.
 
-**Expected Output:**  
-Factorial of 5 is 120
-```
+**Syntax:**
+
+```sql
 SET SERVEROUTPUT ON;
 
-
-CREATE OR REPLACE FUNCTION get_factorial(p_number IN NUMBER)
-RETURN NUMBER
-IS
-   v_result NUMBER := 1;
+CREATE OR REPLACE FUNCTION get_factorial (p_num IN NUMBER) 
+RETURN NUMBER IS
+  v_fact NUMBER := 1;
+  i NUMBER;
 BEGIN
-   IF p_number < 0 THEN
-      RETURN NULL;  
-   END IF;
-
-   FOR i IN 1..p_number LOOP
-      v_result := v_result * i;
-   END LOOP;
-
-   RETURN v_result;
+  FOR i IN 1..p_num LOOP
+    v_fact := v_fact * i;
+  END LOOP;
+  RETURN v_fact;
 END;
 /
 
 DECLARE
-   v_input NUMBER := 5;
-   v_output NUMBER;
+  v_result NUMBER;
 BEGIN
-   v_output := get_factorial(v_input);
-   DBMS_OUTPUT.PUT_LINE('Factorial of ' || v_input || ' is ' || v_output);
+  v_result := get_factorial(5);
+  DBMS_OUTPUT.PUT_LINE('Factorial of 5 is ' || v_result);
 END;
 /
 ```
+**Expected Output:**  
+Factorial of 5 is 120
 
-![image](https://github.com/user-attachments/assets/1319e42f-c31c-49dd-8c20-1bb349322a54)
+**Output:**  
+
+<img width="258" height="132" alt="image" src="https://github.com/user-attachments/assets/2b2a5e73-f1c4-43c5-866e-d62fe014f0d0" />
 
 ---
 
@@ -136,31 +138,32 @@ END;
 - Use the `MOD` function to check if the number is divisible by 2.
 - Display whether it is Even or Odd using `DBMS_OUTPUT.PUT_LINE`.
 
+**Syntax:**
+
+```sql
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE PROCEDURE check_even_odd (p_num IN NUMBER) IS
+BEGIN
+  IF MOD(p_num, 2) = 0 THEN
+    DBMS_OUTPUT.PUT_LINE(p_num || ' is Even');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE(p_num || ' is Odd');
+  END IF;
+END;
+/
+
+BEGIN
+  check_even_odd(12);
+END;
+/
+```
 **Expected Output:**  
 12 is Even
 
-```
-SET SERVEROUTPUT ON;
+**Output:**  
 
-
-CREATE OR REPLACE PROCEDURE check_even_odd(p_number IN NUMBER) IS
-BEGIN
-  
-   IF MOD(p_number, 2) = 0 THEN
-      DBMS_OUTPUT.PUT_LINE(p_number || ' is Even');
-   ELSE
-      DBMS_OUTPUT.PUT_LINE(p_number || ' is Odd');
-   END IF;
-END;
-/
-
-BEGIN
-   check_even_odd(12);  
-END;
-/
-```
-
-![image](https://github.com/user-attachments/assets/1275528f-e95b-4523-8f3c-90f065a73b94)
+<img width="143" height="105" alt="image" src="https://github.com/user-attachments/assets/ce9016ae-5cfb-4989-b356-b97fdab911de" />
 
 ---
 
@@ -173,37 +176,41 @@ END;
 - Return the reversed number.
 - Call the function and display the output.
 
+**Syntax:**
+
+```sql
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE FUNCTION reverse_number (p_num IN NUMBER)
+RETURN NUMBER IS
+  v_num NUMBER := p_num;
+  v_rev NUMBER := 0;
+  v_digit NUMBER;
+BEGIN
+  WHILE v_num > 0 LOOP
+    v_digit := MOD(v_num, 10);
+    v_rev := (v_rev * 10) + v_digit;
+    v_num := TRUNC(v_num / 10);
+  END LOOP;
+  RETURN v_rev;
+END;
+/
+
+DECLARE
+  v_result NUMBER;
+BEGIN
+  v_result := reverse_number(1234);
+  DBMS_OUTPUT.PUT_LINE('Reversed number of 1234 is ' || v_result);
+END;
+/
+```
+
 **Expected Output:**  
 Reversed number of 1234 is 4321
 
-```
-CREATE OR REPLACE FUNCTION reverse_number(p_number IN NUMBER)
-RETURN NUMBER IS
-    v_number     NUMBER := p_number;
-    v_reversed   NUMBER := 0;
-    v_digit      NUMBER;
-BEGIN
-    WHILE v_number > 0 LOOP
-        v_digit := MOD(v_number, 10);
-        v_reversed := (v_reversed * 10) + v_digit;
-        v_number := TRUNC(v_number / 10);
-    END LOOP;
-    RETURN v_reversed;
-END;
-/
-SET SERVEROUTPUT ON;
+**Output:**  
 
-DECLARE
-    v_input    NUMBER := 1234;
-    v_result   NUMBER;
-BEGIN
-    v_result := reverse_number(v_input);
-    DBMS_OUTPUT.PUT_LINE('Reversed number of ' || v_input || ' is ' || v_result);
-END;
-/
-```
-
-![image](https://github.com/user-attachments/assets/b08ddc4c-962a-4af3-b600-55a98927cc9a)
+<img width="352" height="138" alt="image" src="https://github.com/user-attachments/assets/1d03f570-e2ba-4d06-8425-d67c4cf14bdb" />
 
 ---
 
@@ -215,6 +222,25 @@ END;
 - Use a loop from 1 to 10 to multiply the input number.
 - Display the multiplication results using `DBMS_OUTPUT.PUT_LINE`.
 
+**Syntax:**
+
+```sql
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE PROCEDURE print_table (p_num IN NUMBER) IS
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Multiplication table of ' || p_num || ':');
+  FOR i IN 1..10 LOOP
+    DBMS_OUTPUT.PUT_LINE(p_num || ' x ' || i || ' = ' || (p_num * i));
+  END LOOP;
+END;
+/
+
+BEGIN
+  print_table(5);
+END;
+/
+```
 **Expected Output:**  
 Multiplication table of 5:  
 5 x 1 = 5  
@@ -223,24 +249,9 @@ Multiplication table of 5:
 ...  
 5 x 10 = 50
 
-```
-CREATE OR REPLACE PROCEDURE print_table(p_number IN NUMBER) IS
-BEGIN
-    DBMS_OUTPUT.PUT_LINE('Multiplication table of ' || p_number || ':');
-    FOR i IN 1..10 LOOP
-        DBMS_OUTPUT.PUT_LINE(p_number || ' x ' || i || ' = ' || (p_number * i));
-    END LOOP;
-END;
-/
-SET SERVEROUTPUT ON;
+**Output:**
 
-BEGIN
-    print_table(5);
-END;
-/
-```
-
-![image](https://github.com/user-attachments/assets/0ef9eca5-64dc-4cc4-a91b-218d48a989dc)
+<img width="306" height="355" alt="image" src="https://github.com/user-attachments/assets/148a7617-b168-4422-8c48-3f4725bc0f34" />
 
 ## RESULT
 Thus, the PL/SQL programs using procedures and functions were written, compiled, and executed successfully.
